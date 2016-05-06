@@ -2,8 +2,8 @@ package controller;
 
 import java.util.List;
 
-import model.RawModel;
-import model.TexturedModel;
+import model.ModelInfo;
+import model.ModelAndTexuredInfo;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -39,7 +39,7 @@ public class TerrainRenderer {
 	}
 
 	private void prepareTerrain(Terrain terrain) {
-		RawModel rawModel = terrain.getModel();
+		ModelInfo rawModel = terrain.getModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);

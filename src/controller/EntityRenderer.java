@@ -3,8 +3,8 @@ package controller;
 import java.util.List;
 import java.util.Map;
 
-import model.RawModel;
-import model.TexturedModel;
+import model.ModelInfo;
+import model.ModelAndTexuredInfo;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -29,8 +29,8 @@ public class EntityRenderer {
 		shader.stop();
 	}
 
-	public void render(Map<TexturedModel, List<Entity>> entities) {
-		for (TexturedModel model : entities.keySet()) {
+	public void render(Map<ModelAndTexuredInfo, List<Entity>> entities) {
+		for (ModelAndTexuredInfo model : entities.keySet()) {
 			prepareTexturedModel(model);
 			List<Entity> batch = entities.get(model);
 			for (Entity entity : batch) {
@@ -42,8 +42,8 @@ public class EntityRenderer {
 		}
 	}
 
-	private void prepareTexturedModel(TexturedModel model) {
-		RawModel rawModel = model.getRawModel();
+	private void prepareTexturedModel(ModelAndTexuredInfo model) {
+		ModelInfo rawModel = model.getRawModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);

@@ -1,17 +1,17 @@
 package controller;
 
-import model.TexturedModel;
+import model.ModelAndTexuredInfo;
 
 import org.lwjgl.util.vector.Vector3f;
 
 public class Entity {
 
-	private TexturedModel model;
+	private ModelAndTexuredInfo model;
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
 	private float scale;
 
-	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ,
+	public Entity(ModelAndTexuredInfo model, Vector3f position, float rotX, float rotY, float rotZ,
 			float scale) {
 		this.model = model;
 		this.position = position;
@@ -33,11 +33,11 @@ public class Entity {
 		this.rotZ += dz;
 	}
 
-	public TexturedModel getModel() {
+	public ModelAndTexuredInfo getModel() {
 		return model;
 	}
 
-	public void setModel(TexturedModel model) {
+	public void setModel(ModelAndTexuredInfo model) {
 		this.model = model;
 	}
 

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.TexturedModel;
+import model.ModelAndTexuredInfo;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -33,7 +33,7 @@ public class MasterRenderer {
 	private TerrainShader terrainShader = new TerrainShader();
 	
 	
-	private Map<TexturedModel,List<Entity>> entities = new HashMap<TexturedModel,List<Entity>>();
+	private Map<ModelAndTexuredInfo,List<Entity>> entities = new HashMap<ModelAndTexuredInfo,List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
 	
 	public MasterRenderer(){
@@ -65,7 +65,7 @@ public class MasterRenderer {
 	}
 	
 	public void processEntity(Entity entity){
-		TexturedModel entityModel = entity.getModel();
+		ModelAndTexuredInfo entityModel = entity.getModel();
 		List<Entity> batch = entities.get(entityModel);
 		if(batch!=null){
 			batch.add(entity);

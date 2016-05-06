@@ -2,18 +2,18 @@ package model;
 
 import model.ModelTexture;
 
-public class TexturedModel {
+public class ModelAndTexuredInfo {
 	
-	private RawModel rawModel;
+	private ModelInfo rawModel;
 	private ModelTexture texture;
 
 	
-	public TexturedModel(RawModel model, ModelTexture texture){
+	public ModelAndTexuredInfo(ModelInfo model, ModelTexture texture){
 		this.rawModel = model;
 		this.texture = texture;
 	}
 
-	public RawModel getRawModel() {
+	public ModelInfo getRawModel() {
 		return rawModel;
 	}
 

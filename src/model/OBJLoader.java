@@ -7,14 +7,14 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.RawModel;
+import model.ModelInfo;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class OBJLoader {
 
-	public static RawModel loadObjModel(String fileName, Loader loader) {
+	public static ModelInfo loadObjModel(String fileName, DataLoaderVAO loader) {
 		FileReader fr = null;
 		try {
 			fr = new FileReader(new File("res/" + fileName + ".obj"));

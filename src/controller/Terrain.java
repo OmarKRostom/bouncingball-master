@@ -1,7 +1,7 @@
 package controller;
 
-import model.RawModel;
-import model.Loader;
+import model.ModelInfo;
+import model.DataLoaderVAO;
 import model.ModelTexture;
 
 public class Terrain {
@@ -11,10 +11,10 @@ public class Terrain {
 	
 	private float x;
 	private float z;
-	private RawModel model;
+	private ModelInfo model;
 	private ModelTexture texture;
 	
-	public Terrain(int gridX, int gridZ, Loader loader, ModelTexture texture){
+	public Terrain(int gridX, int gridZ, DataLoaderVAO loader, ModelTexture texture){
 		this.texture = texture;
 		this.x = gridX * SIZE;
 		this.z = gridZ * SIZE;
@@ -35,7 +35,7 @@ public class Terrain {
 
 
 
-	public RawModel getModel() {
+	public ModelInfo getModel() {
 		return model;
 	}
 
@@ -47,7 +47,7 @@ public class Terrain {
 
 
 
-	private RawModel generateTerrain(Loader loader){
+	private ModelInfo generateTerrain(DataLoaderVAO loader){
 		int count = VERTEX_COUNT * VERTEX_COUNT;
 		float[] vertices = new float[count * 3];
 		float[] normals = new float[count * 3];
