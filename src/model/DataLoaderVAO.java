@@ -8,6 +8,7 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
@@ -117,6 +118,9 @@ public class DataLoaderVAO {
    {
        Texture texture=null;
        texture=TextureLoader.getTexture("PNG",new FileInputStream("res/"+file+".png"));
+       GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
+       GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
+       GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, -0.5f);
        int textureID=texture.getTextureID();
        Texture_IDS.add(textureID);
        return textureID;
