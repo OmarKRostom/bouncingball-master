@@ -14,6 +14,7 @@ public class Player extends Entity{
 
     private static final float runSpeed=0.05f;
     private static final float turnSpeed=0.5f;
+    private static final float LeftRightSpeed=1f;
     private static final float gravity=-0.001f;
     private static final float jumpPower=0.3f; 
     private static final float terrainHieght=0;
@@ -30,8 +31,18 @@ public class Player extends Entity{
     
     public void move(){
         checkInputs();
-        currentRunSpeed=runSpeed;
-        //super.increaseRotation(-turnSpeed*DisplayManager.getFrameTime(),0,0);
+        currentTurnSpeed=turnSpeed;
+        
+        if(movingLeftRightSpeed!=0){
+            this.currentRunSpeed=0;    
+        }
+        else{
+           this.currentRunSpeed=runSpeed;
+           super.increaseRotation(-this.currentTurnSpeed*DisplayManager.getFrameTime(),0,0);
+        }
+        
+        super.increasePosition(movingLeftRightSpeed,0,0);
+      
         float distance= this.currentRunSpeed*DisplayManager.getFrameTime();
         float dx= (float)(distance*Math.sin(Math.toRadians(super.getRotY())));
         float dz=(float)(distance*Math.cos(Math.toRadians(super.getRotY())));
@@ -41,41 +52,31 @@ public class Player extends Entity{
         if(super.getPosition().y<terrainHieght){
             upwardsSpeed=0;
             super.getPosition().y=terrainHieght;
-            inAir=false;
-            
+            inAir=false;  
         }
-    
+        
+   
     }
     
     
     
     private void checkInputs(){
-        /*if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-           movingLeftRightSpeed=runSpeed;
+        
+       if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+          movingLeftRightSpeed=LeftRightSpeed;    
         }
-        else if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-             movingLeftRightSpeed=-runSpeed;
+        else if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+             movingLeftRightSpeed=-LeftRightSpeed;
         }
         else{ 
             movingLeftRightSpeed=0;
-        }*/
-        /*
-       if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-           currentTurnSpeed=-turnSpeed;
         }
-        else if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-             currentTurnSpeed=turnSpeed;
-        }
-        else{ 
-            currentTurnSpeed=0;
-        }
-        */  
+          
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
             if(!inAir){
             upwardsSpeed=jumpPower;
             inAir=true;
             }
-           
         }
     }
     

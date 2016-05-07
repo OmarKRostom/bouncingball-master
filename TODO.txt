@@ -1,8 +1,9 @@
-1) ball model - obstacles model - road texure  --> omar
+1) ball model -->Esraa 
+2) obstacles model - road texure  --> omar
 2) configure the terrain ( road ) --> omar 
 3) randoming obstacles --> omar 
 4) ball move and camera move --> yehia 
 5) terrain(road) collision detection --> yehia
-6) obstacles collision detection --> yehia
+6) obstacles collision detection
 7) menu + timer + score + levels 
 8) bonus 
