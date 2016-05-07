@@ -9,6 +9,7 @@ import controller.Camera;
 import controller.Entity;
 import controller.Light;
 import controller.MasterRenderer;
+import controller.Player;
 import controller.Terrain;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,14 +35,14 @@ public class TheView {
 		DataLoaderVAO loader = new DataLoaderVAO();
 		
 		
-		ModelInfo model = OBJLoader.loadObjModel("tree", loader);
+		ModelInfo model = OBJLoader.loadObjModel("Stormtrooper", loader);
 		
-		ModelAndTexuredInfo staticModel = new ModelAndTexuredInfo(model,new ModelTexture(loader.loadTexture("tree")));
+		ModelAndTexuredInfo staticModel = new ModelAndTexuredInfo(model,new ModelTexture(loader.loadTexture("Dag_Texture")));
 		
 		List<Entity> entities = new ArrayList<Entity>();
 		Random random = new Random();
                 
-                Entity entity = new Entity(staticModel, new Vector3f(0,0,-15),0,0,0,1f);
+                Player myPlayer = new Player(staticModel, new Vector3f(0,0,-15),0,0,0,1f);
                 
 		
 		Light light = new Light(new Vector3f(20000,20000,2000),new Vector3f(1,1,1));
@@ -49,17 +50,19 @@ public class TheView {
 		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("grass")));
 		Terrain terrain2 = new Terrain(1,0,loader,new ModelTexture(loader.loadTexture("grass")));
 		
-		Camera camera = new Camera();	
+		Camera camera = new Camera(myPlayer);	
 		MasterRenderer renderer = new MasterRenderer();
 		
 		while(!Display.isCloseRequested()){
-			camera.move();
-			
+	
 			renderer.processTerrain(terrain);
 			renderer.processTerrain(terrain2);
 			
-                        renderer.processEntity(entity);
+                        renderer.processEntity(myPlayer);
                         
+                        camera.move();
+                        
+                        myPlayer.move();
                        
 			renderer.render(light, camera);
 			DisplayManager.updateDisplay();
