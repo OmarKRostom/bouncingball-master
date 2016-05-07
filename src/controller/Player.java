@@ -13,12 +13,13 @@ import view.DisplayManager;
 public class Player extends Entity{
 
     private static final float runSpeed=0.05f;
-    private static final float turnSpeed=1;
+    private static final float turnSpeed=0.5f;
     private static final float gravity=-0.001f;
-    private static final float jumpPower=0.1f; 
+    private static final float jumpPower=0.3f; 
     private static final float terrainHieght=0;
     private float currentRunSpeed=0;
     private float currentTurnSpeed=0;
+    private float movingLeftRightSpeed=0; 
     private float upwardsSpeed=0;
     Boolean inAir=false;
     
@@ -29,7 +30,8 @@ public class Player extends Entity{
     
     public void move(){
         checkInputs();
-        super.increaseRotation(0, this.currentTurnSpeed*DisplayManager.getFrameTime(),0);
+        currentRunSpeed=runSpeed;
+        //super.increaseRotation(-turnSpeed*DisplayManager.getFrameTime(),0,0);
         float distance= this.currentRunSpeed*DisplayManager.getFrameTime();
         float dx= (float)(distance*Math.sin(Math.toRadians(super.getRotY())));
         float dz=(float)(distance*Math.cos(Math.toRadians(super.getRotY())));
@@ -45,17 +47,20 @@ public class Player extends Entity{
     
     }
     
+    
+    
     private void checkInputs(){
-        if(Keyboard.isKeyDown(Keyboard.KEY_UP)){
-           currentRunSpeed=runSpeed;
+        /*if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+           movingLeftRightSpeed=runSpeed;
         }
-        else if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
-             currentRunSpeed=-runSpeed;
+        else if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+             movingLeftRightSpeed=-runSpeed;
         }
         else{ 
-            currentRunSpeed=0;
-        }
-        if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+            movingLeftRightSpeed=0;
+        }*/
+        /*
+       if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
            currentTurnSpeed=-turnSpeed;
         }
         else if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
@@ -64,6 +69,7 @@ public class Player extends Entity{
         else{ 
             currentTurnSpeed=0;
         }
+        */  
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
             if(!inAir){
             upwardsSpeed=jumpPower;

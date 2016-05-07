@@ -20,6 +20,7 @@ public class Camera {
         }
 	
 	public void move(){
+         
             calculatezoom();
             calculatePitch();
             calculateAngleAroundPlayer();
@@ -27,7 +28,7 @@ public class Camera {
             float verticalDistance=getVerticalDistance();
             calculateCameraPosition(horizontalDistance,verticalDistance);
             this.yaw=180-(myPlayer.getRotY() + angleAroundPlayer);
-		
+	
 	}
 
 	public Vector3f getPosition() {

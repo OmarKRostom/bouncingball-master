@@ -37,12 +37,12 @@ public class TheView {
 		
 		ModelInfo model = OBJLoader.loadObjModel("Stormtrooper", loader);
 		
-		ModelAndTexuredInfo staticModel = new ModelAndTexuredInfo(model,new ModelTexture(loader.loadTexture("Dag_Texture")));
+		ModelAndTexuredInfo staticModel = new ModelAndTexuredInfo(model,new ModelTexture(loader.loadTexture("ball")));
 		
 		List<Entity> entities = new ArrayList<Entity>();
 		Random random = new Random();
                 
-                Player myPlayer = new Player(staticModel, new Vector3f(0,0,-15),0,0,0,1f);
+                Player myPlayer = new Player(staticModel, new Vector3f(0,0,-15),0,180,0,2.5f);
                 
 		
 		Light light = new Light(new Vector3f(20000,20000,2000),new Vector3f(1,1,1));
