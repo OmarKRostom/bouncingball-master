@@ -47,16 +47,18 @@ public class TheView {
 		
 		Light light = new Light(new Vector3f(350,2000,200),new Vector3f(1,1,1));
 		
-		Terrain terrain = new Terrain(0.5f,0,loader,new ModelTexture(loader.loadTexture("grass","PNG")));
-		//Terrain terrain2 = new Terrain(0.02f,1,loader,new ModelTexture(loader.loadTexture("grass","PNG")));
 		
+                Terrain terrain = new Terrain(0.5f,0,loader,new ModelTexture(loader.loadTexture("grass","PNG")));
+		Terrain terrain2 = new Terrain(0.5f,-1.5f,loader,new ModelTexture(loader.loadTexture("grass","PNG")));
+                		
 		Camera camera = new Camera(myPlayer);	
 		MasterRenderer renderer = new MasterRenderer();
 		
 		while(!Display.isCloseRequested()){
 	
+                       
 			renderer.processTerrain(terrain);
-			//renderer.processTerrain(terrain2);
+			renderer.processTerrain(terrain2);
 			
                         renderer.processEntity(myPlayer);
                         

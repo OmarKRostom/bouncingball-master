@@ -17,7 +17,7 @@ public class Player extends Entity{
     private static final float LeftRightSpeed=1f;
     private static final float gravity=-0.001f;
     private static final float jumpPower=0.3f; 
-    private static final float terrainHieght=0;
+    private static final float terrainHieght=4;
     private float currentRunSpeed=0;
     private float currentTurnSpeed=0;
     private float movingLeftRightSpeed=0; 
@@ -41,14 +41,14 @@ public class Player extends Entity{
            super.increaseRotation(this.currentTurnSpeed*DisplayManager.getFrameTime(),0,0);
         }
         
-        //super.increasePosition(movingLeftRightSpeed,0,0);
+        super.increasePosition(movingLeftRightSpeed,0,0);
       
         float distance= this.currentRunSpeed*DisplayManager.getFrameTime();
         float dx= (float)(distance*Math.sin(Math.toRadians(super.getRotY())));
         float dz=(float)(distance*Math.cos(Math.toRadians(super.getRotY())));
         super.increasePosition(dx, 0, dz);
         upwardsSpeed+=gravity*DisplayManager.getFrameTime();
-        //super.increasePosition(0, upwardsSpeed*DisplayManager.getFrameTime(),0);
+        super.increasePosition(0, upwardsSpeed*DisplayManager.getFrameTime(),0);
         if(super.getPosition().y<terrainHieght){
             upwardsSpeed=0;
             super.getPosition().y=terrainHieght;
