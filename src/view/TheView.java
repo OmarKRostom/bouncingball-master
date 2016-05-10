@@ -35,20 +35,20 @@ public class TheView {
 		DataLoaderVAO loader = new DataLoaderVAO();
 		
 		
-		ModelInfo model = OBJLoader.loadObjModel("Stormtrooper", loader);
+		ModelInfo model = OBJLoader.loadObjModel("laastsphere", loader);
 		
-		ModelAndTexuredInfo staticModel = new ModelAndTexuredInfo(model,new ModelTexture(loader.loadTexture("ball")));
+		ModelAndTexuredInfo staticModel = new ModelAndTexuredInfo(model,new ModelTexture(loader.loadTexture("ball","jpg")));
 		
 		List<Entity> entities = new ArrayList<Entity>();
 		Random random = new Random();
                 
-                Player myPlayer = new Player(staticModel, new Vector3f(0,0,-15),0,180,0,2.5f);
+                Player myPlayer = new Player(staticModel, new Vector3f(0,5,0),0,180,0,2.5f);
                 
 		
-		Light light = new Light(new Vector3f(20000,20000,2000),new Vector3f(1,1,1));
+		Light light = new Light(new Vector3f(350,2000,200),new Vector3f(1,1,1));
 		
-		Terrain terrain = new Terrain(0,0,loader,new ModelTexture(loader.loadTexture("grass")));
-		Terrain terrain2 = new Terrain(1,0,loader,new ModelTexture(loader.loadTexture("grass")));
+		Terrain terrain = new Terrain(0.5f,0,loader,new ModelTexture(loader.loadTexture("grass","PNG")));
+		//Terrain terrain2 = new Terrain(0.02f,1,loader,new ModelTexture(loader.loadTexture("grass","PNG")));
 		
 		Camera camera = new Camera(myPlayer);	
 		MasterRenderer renderer = new MasterRenderer();
@@ -56,7 +56,7 @@ public class TheView {
 		while(!Display.isCloseRequested()){
 	
 			renderer.processTerrain(terrain);
-			renderer.processTerrain(terrain2);
+			//renderer.processTerrain(terrain2);
 			
                         renderer.processEntity(myPlayer);
                         

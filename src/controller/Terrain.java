@@ -14,14 +14,12 @@ public class Terrain {
 	private ModelInfo model;
 	private ModelTexture texture;
 	
-	public Terrain(int gridX, int gridZ, DataLoaderVAO loader, ModelTexture texture){
+	public Terrain(float gridX, float gridZ, DataLoaderVAO loader, ModelTexture texture){
 		this.texture = texture;
 		this.x = gridX * SIZE;
 		this.z = gridZ * SIZE;
 		this.model = generateTerrain(loader);
 	}
-	
-	
 	
 	public float getX() {
 		return x;

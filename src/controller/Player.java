@@ -38,17 +38,17 @@ public class Player extends Entity{
         }
         else{
            this.currentRunSpeed=runSpeed;
-           super.increaseRotation(-this.currentTurnSpeed*DisplayManager.getFrameTime(),0,0);
+           super.increaseRotation(this.currentTurnSpeed*DisplayManager.getFrameTime(),0,0);
         }
         
-        super.increasePosition(movingLeftRightSpeed,0,0);
+        //super.increasePosition(movingLeftRightSpeed,0,0);
       
         float distance= this.currentRunSpeed*DisplayManager.getFrameTime();
         float dx= (float)(distance*Math.sin(Math.toRadians(super.getRotY())));
         float dz=(float)(distance*Math.cos(Math.toRadians(super.getRotY())));
         super.increasePosition(dx, 0, dz);
         upwardsSpeed+=gravity*DisplayManager.getFrameTime();
-        super.increasePosition(0, upwardsSpeed*DisplayManager.getFrameTime(),0);
+        //super.increasePosition(0, upwardsSpeed*DisplayManager.getFrameTime(),0);
         if(super.getPosition().y<terrainHieght){
             upwardsSpeed=0;
             super.getPosition().y=terrainHieght;
@@ -74,8 +74,8 @@ public class Player extends Entity{
           
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
             if(!inAir){
-            upwardsSpeed=jumpPower;
-            inAir=true;
+                upwardsSpeed=jumpPower;
+                inAir=true;
             }
         }
     }
