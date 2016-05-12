@@ -24,8 +24,9 @@ public class DisplayManager {
 		
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH,HEIGHT));
-			Display.create(new PixelFormat(), attribs);
-			Display.setTitle("Boucing Ball");
+			//Display.create(new PixelFormat(), attribs);
+			Display.create();
+                        Display.setTitle("Boucing Ball");
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 		}
