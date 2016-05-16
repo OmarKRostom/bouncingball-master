@@ -29,9 +29,10 @@ import org.lwjgl.util.vector.Vector3f;
  * @author yehia
  */
 public class TheView {
-
+public static int Score;
+private static int y=0;
     public static void view() throws IOException, LWJGLException {
-       // DisplayManager.createDisplay();
+//        DisplayManager.createDisplay();
         DataLoaderVAO loader = new DataLoaderVAO();
 
         ModelInfo model = OBJLoader.loadObjModel("laastsphere", loader);
@@ -41,18 +42,15 @@ public class TheView {
         List<Entity> entities = new ArrayList<Entity>();
         Random random = new Random();
 
-        Player myPlayer = new Player(staticModel, new Vector3f(0, 5, 0), 0, 180, 0, 1.5f);
-        
-        
+        Player myPlayer = new Player(staticModel, new Vector3f(0, 5, 0), 0, 180, 0, 1f);
 
         Light light = new Light(new Vector3f(350, 2000, 200), new Vector3f(1, 1, 1));
 
         List<Terrain> myList=new ArrayList<>();
         for(int i=0;i>-100;i--){
-        Terrain terrain = new Terrain(0.5f/12, i, loader, new ModelTexture(loader.loadTexture("Road", "jpg")));
+        Terrain terrain = new Terrain(0.5f/16, i, loader, new ModelTexture(loader.loadTexture("Road", "jpg")));
          myList.add(terrain);
         }
-        
         
         Camera camera = new Camera(myPlayer);
         MasterRenderer renderer = new MasterRenderer();
@@ -60,8 +58,8 @@ public class TheView {
         
         while (!Display.isCloseRequested()) {
 
-            
-            
+            Menu menu = new Menu();
+           menu.checkInput();
             for(Terrain terrain:myList){
                 
             renderer.processTerrain(terrain);
@@ -79,8 +77,12 @@ public class TheView {
            
             renderer.render(light, camera);
            
-            
-            Menu.writeFont(20,20,"Score :");
+            if(y%2==0)
+            {
+            Score++;
+            }
+            y++;
+            Menu.writeFont(20,20,"Score : "+Integer.toString(Score));
             DisplayManager.updateDisplay();
         }
 
