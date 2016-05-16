@@ -51,9 +51,15 @@ public class Player extends Entity{
         upwardsSpeed-=gravity*DisplayManager.getFrameTime();
         super.increasePosition(0, upwardsSpeed*DisplayManager.getFrameTime(),0);
         
-        if(super.getPosition().y<terrainHieght){
+        if(super.getPosition().y<=terrainHieght+1 && !inAir){
             upwardsSpeed=0;
             super.getPosition().y=terrainHieght;
+        }
+        
+        if(super.getPosition().y<=terrainHieght+1 && inAir){
+            upwardsSpeed=0.09f;
+            upwardsSpeed-=gravity*DisplayManager.getFrameTime();
+             super.increasePosition(0, upwardsSpeed*DisplayManager.getFrameTime(),0);
             inAir=false;  
         }
         
