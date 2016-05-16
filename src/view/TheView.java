@@ -6,6 +6,7 @@
 package view;
 
 import controller.Camera;
+import controller.Enemy;
 import controller.Entity;
 import controller.Light;
 import controller.MasterRenderer;
@@ -31,7 +32,30 @@ import org.lwjgl.util.vector.Vector3f;
 public class TheView {
 public static int Score;
 private static int y=0;
-    public static void view() throws IOException, LWJGLException {
+private int lastx = -1;
+private int lastz = -1;
+private boolean negFlag = true;
+    
+    public int getIntelligentPosition(char type) {
+        Random rand = new Random();
+        negFlag = !negFlag;
+        if(type=='x' && negFlag==false) {
+            int res = rand.nextInt(25)+0;
+            return res;
+        }
+        else if(type=='x' && negFlag==true) {
+            return -1 * rand.nextInt(25)+0;
+        }
+        else if(type=='z') {
+            int res = rand.nextInt(5000)+0;
+            return res;
+        }
+        else return 0;
+    }
+
+    public void view() throws IOException, LWJGLException {
+        
+        Random rand = new Random();
 //        DisplayManager.createDisplay();
         DataLoaderVAO loader = new DataLoaderVAO();
 
@@ -42,11 +66,13 @@ private static int y=0;
         List<Entity> entities = new ArrayList<Entity>();
         Random random = new Random();
 
-        Player myPlayer = new Player(staticModel, new Vector3f(0, 5, 0), 0, 180, 0, 1f);
+        Player myPlayer = new Player(staticModel, new Vector3f(10, 15, 10), 0, 180, 0, 1.5f);
 
         Light light = new Light(new Vector3f(350, 2000, 200), new Vector3f(1, 1, 1));
 
         List<Terrain> myList=new ArrayList<>();
+        List<Enemy> enemies = new ArrayList<>();
+        
         for(int i=0;i>-100;i--){
         Terrain terrain = new Terrain(0.5f/16, i, loader, new ModelTexture(loader.loadTexture("Road", "jpg")));
          myList.add(terrain);
@@ -56,23 +82,32 @@ private static int y=0;
         MasterRenderer renderer = new MasterRenderer();
 
         
+        ModelInfo model2 = OBJLoader.loadObjModel("CrateModel",loader);
+        ModelAndTexuredInfo staticModel2 = new ModelAndTexuredInfo(model2, new ModelTexture(loader.loadTexture("wood","jpg")));
+        boolean negativeFlag = false;
+        for (int i = 0; i < 100; i++) {
+            System.out.println(getIntelligentPosition('z'));
+            Enemy enemy = new Enemy(staticModel2,new Vector3f(getIntelligentPosition('x'),0,-1*getIntelligentPosition('z')),0,180,0,0.1f);
+            enemies.add(enemy);
+        }
+        
+        
         while (!Display.isCloseRequested()) {
 
             Menu menu = new Menu();
-           menu.checkInput();
+            menu.checkInput();
             for(Terrain terrain:myList){
-                
-            renderer.processTerrain(terrain);
-            
+                renderer.processTerrain(terrain); 
             }
             
-            
             renderer.processEntity(myPlayer);
-
+            for (Enemy enemy:enemies) {
+                renderer.processEntity(enemy);
+            }
             camera.move();
 
             myPlayer.move();
-
+            
             
            
             renderer.render(light, camera);

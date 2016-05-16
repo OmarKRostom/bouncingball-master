@@ -86,7 +86,8 @@ public class Menu {
                 writeFont(500, 100, "Pause");
                 break;
             case GAME:
-                TheView.view();
+                TheView v = new TheView();
+                v.view();
                 break;
             case INTRO:
                 DisplayManager.createDisplay();
