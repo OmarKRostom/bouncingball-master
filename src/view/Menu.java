@@ -72,7 +72,7 @@ public class Menu {
     public  void checkInput() throws IOException, LWJGLException {
         switch (state) {
             case INTRO:
-                if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+                if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
                     state = state.GAME;
                     menu();
                 }
