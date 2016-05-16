@@ -28,7 +28,7 @@ public class Camera {
             float verticalDistance=getVerticalDistance();
             calculateCameraPosition(horizontalDistance,verticalDistance);
             this.yaw=180-(myPlayer.getRotY() + angleAroundPlayer);
-	
+            checkInput();           
 	}
 
 	public Vector3f getPosition() {
@@ -90,8 +90,19 @@ public class Camera {
             position.x=myPlayer.getPosition().x-xOffset;
             position.y=myPlayer.getPosition().y+vDistance;
             position.z=myPlayer.getPosition().z-zOffset;
-            
-        
         }
 
+        private void checkInput(){
+        
+            if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
+                distanceFromPlayer=-11;
+                pitch=2;
+            }
+            if(Keyboard.isKeyDown(Keyboard.KEY_W)){
+                distanceFromPlayer=50;
+                pitch=5;
+            }
+        
+        
+        }
 }
