@@ -45,26 +45,41 @@ public class TheView {
 
         Light light = new Light(new Vector3f(350, 2000, 200), new Vector3f(1, 1, 1));
 
-        Terrain terrain = new Terrain(0.5f, 0, loader, new ModelTexture(loader.loadTexture("grass", "PNG")));
-        Terrain terrain2 = new Terrain(0.5f, -1.5f, loader, new ModelTexture(loader.loadTexture("grass", "PNG")));
-
+        List<Terrain> myList=new ArrayList<>();
+        for(int i=0;i>-100;i--){
+        Terrain terrain = new Terrain(0.5f/12, i, loader, new ModelTexture(loader.loadTexture("grass", "PNG")));
+         myList.add(terrain);
+        }
+        
         Camera camera = new Camera(myPlayer);
         MasterRenderer renderer = new MasterRenderer();
 
+        
         while (!Display.isCloseRequested()) {
 
+            
+            
+            for(Terrain terrain:myList){
+                
             renderer.processTerrain(terrain);
-            renderer.processTerrain(terrain2);
-
+            
+            }
+            
+            
             renderer.processEntity(myPlayer);
 
             camera.move();
 
             myPlayer.move();
 
+            
+           
             renderer.render(light, camera);
-           /* Menu menu= new Menu();
+           
+            
+            /* Menu menu= new Menu();
             menu.writeFont("ssss");*/
+            
             DisplayManager.updateDisplay();
         }
 

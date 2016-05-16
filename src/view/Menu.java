@@ -25,7 +25,7 @@ public class Menu {
         INTRO, MAIN_MENU, GAME;
     }
     private State state = State.INTRO;
-    public TrueTypeFont font;
+    public static TrueTypeFont font;
     public boolean antiAlias = true;
 
     public void loadFont() {
@@ -34,10 +34,10 @@ public class Menu {
 
     }
 
-    public void writeFont(int BL,int BU,String x) {
+    public static void writeFont(int BL,int BU,String x) {
 
         Color.white.bind();
-        font.drawString(BL, BU, x, Color.green);
+        font.drawString(BL, BU, x, Color.red);
 
     }
 
@@ -45,7 +45,7 @@ public class Menu {
 
         switch (state) {
             case MAIN_MENU:
-                writeFont(500,100,"PAUSE");
+                writeFont(500,100,"GETREADY");
                 break;
             case GAME:
                 TheView.view();

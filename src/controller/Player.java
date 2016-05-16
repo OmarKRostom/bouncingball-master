@@ -23,8 +23,7 @@ public class Player extends Entity{
     private float movingLeftRightSpeed=0; 
     private float upwardsSpeed=0;
     Boolean inAir=false;
-    
-    
+
     public Player(ModelAndTexuredInfo model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
         super(model, position, rotX, rotY, rotZ, scale);
     }
@@ -42,13 +41,14 @@ public class Player extends Entity{
         }
         
         super.increasePosition(movingLeftRightSpeed,0,0);
-      
+       
         float distance= this.currentRunSpeed*DisplayManager.getFrameTime();
         float dx= (float)(distance*Math.sin(Math.toRadians(super.getRotY())));
         float dz=(float)(distance*Math.cos(Math.toRadians(super.getRotY())));
         super.increasePosition(dx, 0, dz);
         upwardsSpeed+=gravity*DisplayManager.getFrameTime();
         super.increasePosition(0, upwardsSpeed*DisplayManager.getFrameTime(),0);
+        
         if(super.getPosition().y<terrainHieght){
             upwardsSpeed=0;
             super.getPosition().y=terrainHieght;

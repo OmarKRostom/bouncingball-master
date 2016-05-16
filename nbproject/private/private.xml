@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/C:/Users/loai%20Aboelsooud/Desktop/bouncingball-master/src/main/MainGameLoop.java</file>
-            <file>file:/C:/Users/loai%20Aboelsooud/Desktop/bouncingball-master/src/view/TheView.java</file>
-            <file>file:/C:/Users/loai%20Aboelsooud/Desktop/bouncingball-master/src/view/Menu.java</file>
+            <file>file:/D:/Projects/bouncingball-master/src/controller/Camera.java</file>
+            <file>file:/D:/Projects/bouncingball-master/src/model/DataLoaderVAO.java</file>
+            <file>file:/D:/Projects/bouncingball-master/src/controller/Player.java</file>
+            <file>file:/D:/Projects/bouncingball-master/src/model/OBJLoader.java</file>
+            <file>file:/D:/Projects/bouncingball-master/src/controller/Entity.java</file>
+            <file>file:/D:/Projects/bouncingball-master/src/main/MainGameLoop.java</file>
+            <file>file:/D:/Projects/bouncingball-master/src/controller/Terrain.java</file>
+            <file>file:/D:/Projects/bouncingball-master/src/view/TheView.java</file>
+            <file>file:/D:/Projects/bouncingball-master/src/view/Menu.java</file>
         </group>
->>>>>>> origin/master
     </open-files>
 </project-private>
