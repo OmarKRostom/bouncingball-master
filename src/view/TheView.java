@@ -77,9 +77,7 @@ public class TheView {
             renderer.render(light, camera);
            
             
-            /* Menu menu= new Menu();
-            menu.writeFont("ssss");*/
-            
+            Menu.writeFont(20,20,"Score :");
             DisplayManager.updateDisplay();
         }
 

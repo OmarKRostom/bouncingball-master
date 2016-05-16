@@ -28,14 +28,14 @@ public class Menu {
     public static TrueTypeFont font;
     public boolean antiAlias = true;
 
-    public void loadFont() {
+    public static void loadFont() {
         Font awtFont = new Font("Times New Roman", Font.BOLD, 50);
         font = new TrueTypeFont(awtFont, false);
 
     }
 
     public static void writeFont(int BL,int BU,String x) {
-
+        loadFont();
         Color.white.bind();
         font.drawString(BL, BU, x, Color.red);
 
