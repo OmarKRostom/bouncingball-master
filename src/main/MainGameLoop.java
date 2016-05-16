@@ -1,15 +1,17 @@
 package main;
 
 import java.io.IOException;
+import org.lwjgl.LWJGLException;
+import view.Menu;
 import view.TheView;
 
 
 public class MainGameLoop {
  
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, LWJGLException {
 
-        TheView myView = new TheView();
-        myView.view();
+        Menu mymenu = new Menu();
+        mymenu.menu();
 
     }
 
