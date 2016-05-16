@@ -29,9 +29,10 @@ import org.lwjgl.util.vector.Vector3f;
  * @author yehia
  */
 public class TheView {
-
+public static int Score;
+private static int y=0;
     public static void view() throws IOException, LWJGLException {
-       // DisplayManager.createDisplay();
+//        DisplayManager.createDisplay();
         DataLoaderVAO loader = new DataLoaderVAO();
 
         ModelInfo model = OBJLoader.loadObjModel("laastsphere", loader);
@@ -57,8 +58,8 @@ public class TheView {
         
         while (!Display.isCloseRequested()) {
 
-            
-            
+            Menu menu = new Menu();
+           menu.checkInput();
             for(Terrain terrain:myList){
                 
             renderer.processTerrain(terrain);
@@ -76,8 +77,12 @@ public class TheView {
            
             renderer.render(light, camera);
            
-            
-            Menu.writeFont(20,20,"Score :");
+            if(y%2==0)
+            {
+            Score++;
+            }
+            y++;
+            Menu.writeFont(20,20,"Score : "+Integer.toString(Score));
             DisplayManager.updateDisplay();
         }
 

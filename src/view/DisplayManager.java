@@ -8,7 +8,7 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
-public class DisplayManager  {
+public class DisplayManager {
 
     private static final int WIDTH = 1280;
     private static final int HEIGHT = 720;
@@ -30,6 +30,21 @@ public class DisplayManager  {
         } catch (LWJGLException e) {
             e.printStackTrace();
         }
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+
+        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+        // enable alpha blending
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+        GL11.glViewport(0, 0, WIDTH, HEIGHT);
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glLoadIdentity();
+        GL11.glOrtho(0, WIDTH, HEIGHT, 0, 1, -1);
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glShadeModel(GL11.GL_SMOOTH);
@@ -53,15 +68,14 @@ public class DisplayManager  {
     }
 
     public static void updateDisplay() {
-        
+
         Display.sync(FPS_CAP);
         Display.update();
         long currentFrameTime = getCurrentTime();
         delta = (currentFrameTime - lastFrameTime);
         lastFrameTime = getCurrentTime();
         //System.out.println(delta);
-        
-       
+
     }
 
     public static void closeDisplay() {
