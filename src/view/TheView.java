@@ -24,6 +24,7 @@ import model.ModelInfo;
 import model.ModelAndTexuredInfo;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
@@ -115,11 +116,18 @@ private ArrayList<Float> zvalues = new ArrayList();
         }
         
         Camera camera = new Camera(myPlayer);
-        MasterRenderer renderer = new MasterRenderer();
+        MasterRenderer renderer = new MasterRenderer(loader);
+        
+       
+        //GuiTexture gui = new GuiTexture(loader.loadTexture("socuwan","jpg"),new Vector2f(0.5f,0.5f),new Vector2f(0.25f,0.25f));
 
         
         ModelInfo model2 = OBJLoader.loadObjModel("CrateModel",loader);
         ModelAndTexuredInfo staticModel2 = new ModelAndTexuredInfo(model2, new ModelTexture(loader.loadTexture("wood","jpg")));
+        //guis.add(gui);
+        
+       
+        
         getIntelligentPosition('x');
         getIntelligentPosition('z');
         for (int i = 0; i < 1000; i++) {
@@ -151,6 +159,7 @@ private ArrayList<Float> zvalues = new ArrayList();
             
            
             renderer.render(light, camera);
+            
            
             if(y%2==0)
             {

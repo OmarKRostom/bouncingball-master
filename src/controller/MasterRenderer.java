@@ -17,6 +17,8 @@ import controller.Terrain;
 import controller.Camera;
 import controller.Entity;
 import controller.Light;
+import model.DataLoaderVAO;
+import skyBox.skyBoxRenderer;
 
 public class MasterRenderer {
 	
@@ -39,13 +41,17 @@ public class MasterRenderer {
 	
 	private Map<ModelAndTexuredInfo,List<Entity>> entities = new HashMap<ModelAndTexuredInfo,List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
+        
+        private skyBoxRenderer skyBoxRenderer;
 	
-	public MasterRenderer(){
+	public MasterRenderer(DataLoaderVAO loader){
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader,projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader,projectionMatrix);
+                
+                skyBoxRenderer = new skyBoxRenderer(loader , projectionMatrix);
 	}
 	
 	public void render(Light sun,Camera camera){
@@ -62,6 +68,7 @@ public class MasterRenderer {
 		terrainShader.loadViewMatrix(camera);
 		terrainRenderer.render(terrains);
 		terrainShader.stop();
+                skyBoxRenderer.render(camera);
 		terrains.clear();
 		entities.clear();
 	}
