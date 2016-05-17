@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.TreeMap;
 import model.DataLoaderVAO;
 import model.ModelTexture;
 import model.OBJLoader;
@@ -35,22 +36,57 @@ private static int y=0;
 private int lastx = -1;
 private int lastz = -1;
 private boolean negFlag = true;
+private TreeMap zvals = new TreeMap();
+private TreeMap xvals = new TreeMap();
+private ArrayList<Float> xvalues = new ArrayList();
+private ArrayList<Float> zvalues = new ArrayList();
     
-    public int getIntelligentPosition(char type) {
+    public void getIntelligentPosition(char type) {
         Random rand = new Random();
-        negFlag = !negFlag;
+        for (int i = 0; i < 1000; i++) {
+            negFlag = !negFlag;
         if(type=='x' && negFlag==false) {
-            int res = rand.nextInt(25)+0;
-            return res;
+            float res = rand.nextInt(25)+0;
+            xvals.put(i,res);
+            xvalues.add(res);
         }
         else if(type=='x' && negFlag==true) {
-            return -1 * rand.nextInt(25)+0;
+            float res = -1 * rand.nextInt(25)+0;
+            xvals.put(i,res);
+            xvalues.add(res);
         }
         else if(type=='z') {
-            int res = rand.nextInt(5000)+0;
-            return res;
+            float res = rand.nextInt(50000)+0;
+            zvals.put(i,res);
+            zvalues.add(res);
         }
-        else return 0;
+        }
+    }
+    
+//    public boolean did_collide_x(float pos) {
+//        for (int i = -50; i < 50; i++) {
+//            if(xvals.containsKey((int)pos+i)) 
+//                return true;
+//        }
+//        return false;
+//    }
+//    
+//    public boolean did_collide_z(float pos) {
+//        for (int i = -50; i < 50; i++) {
+//            if(zvals.containsKey((int)pos+i)) 
+//                return true;
+//        }
+//        return false;
+//    }
+    
+    public boolean detectcollision(Vector3f pos) {
+        int check = 0;
+        for (int i = 0; i < 1000; i++) {
+            if((float)xvals.get(i)+5 > pos.x && (float)xvals.get(i)-5 < pos.x && (float)zvals.get(i)+1000 > -1*pos.z && (float)zvals.get(i)-1000 < -1*pos.z) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void view() throws IOException, LWJGLException {
@@ -84,16 +120,17 @@ private boolean negFlag = true;
         
         ModelInfo model2 = OBJLoader.loadObjModel("CrateModel",loader);
         ModelAndTexuredInfo staticModel2 = new ModelAndTexuredInfo(model2, new ModelTexture(loader.loadTexture("wood","jpg")));
-        boolean negativeFlag = false;
-        for (int i = 0; i < 100; i++) {
-            System.out.println(getIntelligentPosition('z'));
-            Enemy enemy = new Enemy(staticModel2,new Vector3f(getIntelligentPosition('x'),0,-1*getIntelligentPosition('z')),0,180,0,0.1f);
+        getIntelligentPosition('x');
+        getIntelligentPosition('z');
+        for (int i = 0; i < 1000; i++) {
+            Enemy enemy = new Enemy(staticModel2,new Vector3f(xvalues.get(i),0,-1*zvalues.get(i)),0,180,0,0.1f);
             enemies.add(enemy);
         }
         
-        
         while (!Display.isCloseRequested()) {
-
+            if(detectcollision(myPlayer.getPosition())) {
+                System.out.println("COLLIDED");
+            }
             Menu menu = new Menu();
             menu.checkInput();
             for(Terrain terrain:myList){
@@ -103,9 +140,12 @@ private boolean negFlag = true;
             renderer.processEntity(myPlayer);
             for (Enemy enemy:enemies) {
                 renderer.processEntity(enemy);
+                
             }
+            
+            
             camera.move();
-
+            light.move();
             myPlayer.move();
             
             

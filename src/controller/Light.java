@@ -15,6 +15,11 @@ public class Light {
 	public Vector3f getPosition() {
 		return position;
 	}
+        
+        public void move() {
+            this.position.x++;
+            this.position.z++;
+        }
 
 	public void setPosition(Vector3f position) {
 		this.position = position;
