@@ -30,7 +30,7 @@ public class Menu {
 
         INTRO, MAIN_MENU, GAME;
     }
-    private State state = State.INTRO;
+    private State state = State.GAME;
     public static TrueTypeFont font;
     public boolean antiAlias = true;
     private static Texture texture;

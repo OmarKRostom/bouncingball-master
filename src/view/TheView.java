@@ -92,7 +92,7 @@ private ArrayList<Float> zvalues = new ArrayList();
     public void view() throws IOException, LWJGLException {
         
         Random rand = new Random();
-//        DisplayManager.createDisplay();
+        DisplayManager.createDisplay();
         DataLoaderVAO loader = new DataLoaderVAO();
 
         ModelInfo model = OBJLoader.loadObjModel("laastsphere", loader);

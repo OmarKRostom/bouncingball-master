@@ -12,6 +12,8 @@ public class MainGameLoop {
 
         Menu mymenu = new Menu();
         mymenu.menu();
+        //TheView v = new TheView();
+        //v.view();
 
     }
 
