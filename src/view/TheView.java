@@ -26,6 +26,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.newdawn.slick.openal.Audio;
 
 /**
  *
@@ -34,66 +35,45 @@ import org.lwjgl.util.vector.Vector3f;
 public class TheView {
 public static int Score;
 private static int y=0;
-private int lastx = -1;
-private int lastz = -1;
-private boolean negFlag = true;
-private TreeMap zvals = new TreeMap();
-private TreeMap xvals = new TreeMap();
-private ArrayList<Float> xvalues = new ArrayList();
-private ArrayList<Float> zvalues = new ArrayList();
+private float lastx = -1;
+private float lastz = -1;
+private boolean negFlag = false;
+private ArrayList<Integer> xvals = new ArrayList();
+private ArrayList<Integer> zvals = new ArrayList();
+
     
-    public void getIntelligentPosition(char type) {
+    public void getIntelligentPosition() {
         Random rand = new Random();
         for (int i = 0; i < 1000; i++) {
             negFlag = !negFlag;
-        if(type=='x' && negFlag==false) {
-            float res = rand.nextInt(25)+0;
-            xvals.put(i,res);
-            xvalues.add(res);
-        }
-        else if(type=='x' && negFlag==true) {
-            float res = -1 * rand.nextInt(25)+0;
-            xvals.put(i,res);
-            xvalues.add(res);
-        }
-        else if(type=='z') {
-            float res = rand.nextInt(50000)+0;
-            zvals.put(i,res);
-            zvalues.add(res);
-        }
-        }
-    }
-    
-//    public boolean did_collide_x(float pos) {
-//        for (int i = -50; i < 50; i++) {
-//            if(xvals.containsKey((int)pos+i)) 
-//                return true;
-//        }
-//        return false;
-//    }
-//    
-//    public boolean did_collide_z(float pos) {
-//        for (int i = -50; i < 50; i++) {
-//            if(zvals.containsKey((int)pos+i)) 
-//                return true;
-//        }
-//        return false;
-//    }
-    
-    public boolean detectcollision(Vector3f pos) {
-        int check = 0;
-        for (int i = 0; i < 1000; i++) {
-            if((float)xvals.get(i)+5 > pos.x && (float)xvals.get(i)-5 < pos.x && (float)zvals.get(i)+1000 > -1*pos.z && (float)zvals.get(i)-1000 < -1*pos.z) {
-                return true;
+            int X_pos = rand.nextInt(25);
+            int Z_pos = rand.nextInt(50000);
+            if(negFlag) {
+                xvals.add(-1*X_pos);
+                zvals.add(-1*Z_pos);
+            } else {
+                xvals.add(X_pos);
+                zvals.add(-1*Z_pos);
             }
         }
-        return false;
+        //Collections.sort(zvals);
+    }
+    
+    public void collided() {
+        for (int i = 0; i < 1000; i++) {
+            if(lastz <= zvals.get(i)+25 && lastz>=zvals.get(i)-25 && lastx <= xvals.get(i)+2 && lastx>=xvals.get(i)-2) {
+                System.out.println("PLAYER X : " + lastx);
+                System.out.println("ENEMY X : " + xvals.get(i));
+                System.out.println("PLAYER Z : " + lastz);
+                System.out.println("ENEMY Z : " + zvals.get(i));
+            }
+        }
     }
 
     public void view() throws IOException, LWJGLException {
         
         Random rand = new Random();
-        DisplayManager.createDisplay();
+        //DisplayManager.createDisplay();
         DataLoaderVAO loader = new DataLoaderVAO();
 
         ModelInfo model = OBJLoader.loadObjModel("laastsphere", loader);
@@ -119,7 +99,6 @@ private ArrayList<Float> zvalues = new ArrayList();
         MasterRenderer renderer = new MasterRenderer(loader);
         
        
-        //GuiTexture gui = new GuiTexture(loader.loadTexture("socuwan","jpg"),new Vector2f(0.5f,0.5f),new Vector2f(0.25f,0.25f));
 
         
         ModelInfo model2 = OBJLoader.loadObjModel("CrateModel",loader);
@@ -128,17 +107,15 @@ private ArrayList<Float> zvalues = new ArrayList();
         
        
         
-        getIntelligentPosition('x');
-        getIntelligentPosition('z');
+        getIntelligentPosition();
         for (int i = 0; i < 1000; i++) {
-            Enemy enemy = new Enemy(staticModel2,new Vector3f(xvalues.get(i),0,-1*zvalues.get(i)),0,180,0,0.1f);
+            Enemy enemy = new Enemy(staticModel2,new Vector3f(xvals.get(i),0,zvals.get(i)),0,180,0,0.1f);
             enemies.add(enemy);
         }
         
+        
+        
         while (!Display.isCloseRequested()) {
-            if(detectcollision(myPlayer.getPosition())) {
-                System.out.println("COLLIDED");
-            }
             Menu menu = new Menu();
             menu.checkInput();
             for(Terrain terrain:myList){
@@ -146,9 +123,12 @@ private ArrayList<Float> zvalues = new ArrayList();
             }
             
             renderer.processEntity(myPlayer);
-            for (Enemy enemy:enemies) {
+            this.lastx = myPlayer.getPosition().x;
+            this.lastz = myPlayer.getPosition().z;
+            collided();
+            for (int i = 0; i < 1000; i++) {
+                Enemy enemy = enemies.get(i);
                 renderer.processEntity(enemy);
-                
             }
             
             
@@ -166,7 +146,7 @@ private ArrayList<Float> zvalues = new ArrayList();
             Score++;
             }
             y++;
-            Menu.writeFont(20,20,"Score : "+Integer.toString(Score));
+            Menu.writeFont(250,250,"Score : "+Integer.toString(Score));
             DisplayManager.updateDisplay();
         }
 

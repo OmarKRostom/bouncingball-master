@@ -95,7 +95,7 @@ public class Camera {
         private void checkInput(){
         
             if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
-                distanceFromPlayer=-11;
+                distanceFromPlayer=-12;
                 pitch=2;
             }
             if(Keyboard.isKeyDown(Keyboard.KEY_W)){

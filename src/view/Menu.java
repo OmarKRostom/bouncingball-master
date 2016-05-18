@@ -7,15 +7,21 @@
 package view;
 
 import java.awt.Font;
+import java.io.FileInputStream;
 import java.io.IOException;
+import javax.annotation.Resource;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glRectf;
+import org.newdawn.easyogg.OggClip;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -24,13 +30,22 @@ import org.newdawn.slick.util.ResourceLoader;
  *
  * @author loai Aboelsooud
  */
+
+
 public class Menu {
+    
+    private OggClip inGameMusic;
+
+    public void play_in_game() throws IOException {
+        inGameMusic = new OggClip(new FileInputStream("Overworld.ogg"));
+        inGameMusic.loop();
+    }
 
     private static enum State {
 
         INTRO, MAIN_MENU, GAME;
     }
-    private State state = State.GAME;
+    private State state = State.INTRO;
     public static TrueTypeFont font;
     public boolean antiAlias = true;
     private static Texture texture;
@@ -81,9 +96,6 @@ public class Menu {
 
         switch (state) {
             case MAIN_MENU:
-                glColor3f(1.0f, 0f, 0f);
-                glRectf(0, 0, 1280, 720);
-                writeFont(500, 100, "Pause");
                 break;
             case GAME:
                 TheView v = new TheView();

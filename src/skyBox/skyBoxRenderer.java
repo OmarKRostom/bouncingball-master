@@ -112,22 +112,22 @@ public class skyBoxRenderer {
 		int texture2;
 		float blendFactor;		
 		if(time >= 0 && time < 7000){
-                    System.out.println("from 0 to 7000");
+                    //System.out.println("from 0 to 7000");
 			texture1 = nTexture;
 			texture2 = nTexture;
 			blendFactor = (time - 0)/(5000 - 0);
 		}else if(time >= 7000 && time < 10000){
-                    System.out.println("from  7000 to 10000");
+                    //System.out.println("from  7000 to 10000");
 			texture1 = nTexture;
 			texture2 = texture;
 			blendFactor = (time - 7000)/(10000 - 7000);
 		}else if(time >= 10000 && time < 21000){
-                    System.out.println("1000 to 21000");
+                    //System.out.println("1000 to 21000");
 			texture1 = texture;
 			texture2 = texture;
 			blendFactor = (time - 10000)/(21000 - 7000);
 		}else{
-                    System.out.println("more than 21000");
+                    //System.out.println("more than 21000");
 			texture1 = texture;
 			texture2 = nTexture;
 			blendFactor = (time - 21000)/(24000 - 21000);
