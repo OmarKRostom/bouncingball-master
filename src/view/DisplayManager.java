@@ -17,6 +17,22 @@ public class DisplayManager {
     private static long lastFrameTime;
     private static float delta; //time taken to render the previous frame
 
+    public void terrain_flip() {
+        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+        // enable alpha blending
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+        GL11.glViewport(0, 0, WIDTH, HEIGHT);
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glLoadIdentity();
+        GL11.glOrtho(0, WIDTH, HEIGHT, 0, 1, -1);
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+    }
+    
     public static void createDisplay() {
         ContextAttribs attribs = new ContextAttribs(3, 2)
                 .withForwardCompatible(true)

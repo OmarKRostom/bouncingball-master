@@ -11,6 +11,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javax.annotation.Resource;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Controller;
+import org.lwjgl.input.Controllers;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -33,23 +35,19 @@ import org.newdawn.slick.util.ResourceLoader;
 
 
 public class Menu {
-    
-    private OggClip inGameMusic;
-
-    public void play_in_game() throws IOException {
-        inGameMusic = new OggClip(new FileInputStream("Overworld.ogg"));
-        inGameMusic.loop();
-    }
 
     private static enum State {
 
-        INTRO, MAIN_MENU, GAME;
+        INTRO, GAME;
     }
     private State state = State.INTRO;
+    private boolean isXboxConnected = false;
+    private int XboxIndex = -1;
     public static TrueTypeFont font;
     public boolean antiAlias = true;
     private static Texture texture;
-
+    public Controller controller;
+    
     public static void loadFont() {
         Font awtFont = new Font("Times New Roman", Font.BOLD, 50);
         font = new TrueTypeFont(awtFont, false);
@@ -59,8 +57,18 @@ public class Menu {
     public static void writeFont(int BL, int BU, String x) {
         loadFont();
         Color.white.bind();
-        font.drawString(BL, BU, x, Color.red);
+        font.drawString(BL, BU, x, Color.decode("#e0682a"));
+    }
+    
+    private OggClip inGameMusic;
 
+    public void play_in_game() throws IOException {
+        inGameMusic = new OggClip(new FileInputStream("Course.ogg"));
+        inGameMusic.loop();
+    }
+    
+    public void stop_in_game() {
+        inGameMusic.stop();
     }
 
     public static void loadImage() {
@@ -82,23 +90,22 @@ public class Menu {
 
         GL11.glBegin(GL11.GL_QUADS);
         GL11.glTexCoord2f(0, 0);
-        GL11.glVertex2f(100, 100);
+        GL11.glVertex2f(400, 200);
         GL11.glTexCoord2f(1, 0);
-        GL11.glVertex2f(100 + texture.getTextureWidth(), 100);
+        GL11.glVertex2f(1200 , 220);
         GL11.glTexCoord2f(1, 1);
-        GL11.glVertex2f(100 + texture.getTextureWidth(), 100 + texture.getTextureHeight());
+        GL11.glVertex2f(100 + texture.getTextureWidth(), 80 + texture.getTextureHeight());
         GL11.glTexCoord2f(0, 1);
-        GL11.glVertex2f(100, 100 + texture.getTextureHeight());
+        GL11.glVertex2f(350, 100 + texture.getTextureHeight());
         GL11.glEnd();
     }
 
-    public void menu() throws LWJGLException, IOException {
+    public void menu() throws LWJGLException, IOException, InterruptedException {
 
         switch (state) {
-            case MAIN_MENU:
-                break;
             case GAME:
                 TheView v = new TheView();
+                stop_in_game();
                 v.view();
                 break;
             case INTRO:
@@ -106,51 +113,51 @@ public class Menu {
                 Display.setVSyncEnabled(true);
                 loadFont();
                 GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-
+                play_in_game();
                 while (!Display.isCloseRequested()) {
                     GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-
                     drawImage();
-                    writeFont(400, 400, "space bar to start");
-
+                    writeFont(300, 500, "Space bar or start button to start");
                     checkInput();
                     Display.update();
                     Display.sync(60);
                 }
+                
+                Display.destroy();
 
                 break;
         }
     }
 
-    public void checkInput() throws IOException, LWJGLException {
+    public void checkInput() throws IOException, LWJGLException, InterruptedException {
+        Controllers.create();
+        Controllers.poll(); 
+        for (int i = 0; i < Controllers.getControllerCount(); i++) {
+            if(Controllers.getController(i).getName().equalsIgnoreCase("Controller (XBOX 360 For Windows)")) {
+                isXboxConnected = true;
+                XboxIndex = i;
+                break;
+            }
+        }
+        if(isXboxConnected) {
+            controller = Controllers.getController(XboxIndex);
+            controller.poll();
+        }
         switch (state) {
             case INTRO:
                 if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-                    state = state.MAIN_MENU;
-                    menu();
-                }
-                /*   if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-                 Display.destroy();
-                 System.exit(0);
-                 }*/
-                break;
-            case GAME:
-                if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-                    state = state.MAIN_MENU;
-                    System.out.println("test");
-                    menu();
-                }
-                break;
-            case MAIN_MENU:
-
-                if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
                     state = state.GAME;
                     menu();
-
                 }
-
+                if(isXboxConnected) {
+                   if (controller.isButtonPressed(7)) {
+                        state = state.GAME;
+                        menu();
+                    } 
+                }
                 break;
 
+       
         }
     }
 

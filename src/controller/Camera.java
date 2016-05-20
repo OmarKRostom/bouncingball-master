@@ -1,6 +1,10 @@
 package controller;
 
 
+import static java.lang.Thread.sleep;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Controller;
+import org.lwjgl.input.Controllers;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -13,13 +17,30 @@ public class Camera {
 	private float roll;
         private float distanceFromPlayer=50;
         private float angleAroundPlayer=0;
+        public Controller controller;
+        public boolean togglecamera = false;
+        private boolean isXboxConnected = false;
+        private int XboxIndex = -1;
         
 	
-	public Camera(Player player){
+	public Camera(Player player) throws LWJGLException{
              myPlayer=player;
+             Controllers.create();
+            Controllers.poll(); 
+            for (int i = 0; i < Controllers.getControllerCount(); i++) {
+                if(Controllers.getController(i).getName().equalsIgnoreCase("Controller (XBOX 360 For Windows)")) {
+                    isXboxConnected = true;
+                    XboxIndex = i;
+                    break;
+                }
+            }
+            if(isXboxConnected) {
+                controller = Controllers.getController(XboxIndex);
+                controller.poll();
+            }
         }
 	
-	public void move(){
+	public void move() throws LWJGLException, InterruptedException{
          
             calculatezoom();
             calculatePitch();
@@ -28,7 +49,7 @@ public class Camera {
             float verticalDistance=getVerticalDistance();
             calculateCameraPosition(horizontalDistance,verticalDistance);
             this.yaw=180-(myPlayer.getRotY() + angleAroundPlayer);
-            checkInput();           
+            checkInput();  
 	}
 
 	public Vector3f getPosition() {
@@ -62,6 +83,12 @@ public class Camera {
            }
            else if(Keyboard.isKeyDown(Keyboard.KEY_O)){
                pitch-=0.5;
+           } else if(isXboxConnected) {
+               if(controller.isButtonPressed(4)) {
+                   pitch += 0.5;
+               } else if(controller.isButtonPressed(5)) {
+                   pitch -= 0.5;
+               }
            }
         }
         
@@ -91,18 +118,26 @@ public class Camera {
             position.y=myPlayer.getPosition().y+vDistance;
             position.z=myPlayer.getPosition().z-zOffset;
         }
-
-        private void checkInput(){
         
-            if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
+        public void toggleCamera() {
+            if(!togglecamera) {
+                distanceFromPlayer=50;
+                pitch=5;
+            } else {
                 distanceFromPlayer=-12;
                 pitch=2;
             }
-            if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-                distanceFromPlayer=50;
-                pitch=5;
+            togglecamera = !togglecamera;
+        }
+
+        private void checkInput() throws LWJGLException, InterruptedException{
+            
+            if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
+                toggleCamera();
+            } else if(isXboxConnected) {
+                if(controller.isButtonPressed(3)) {
+                    toggleCamera();
+                }
             }
-        
-        
         }
 }

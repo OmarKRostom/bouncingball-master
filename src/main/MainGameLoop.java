@@ -8,10 +8,9 @@ import view.TheView;
 
 public class MainGameLoop {
  
-    public static void main(String[] args) throws IOException, LWJGLException {
+    public static void main(String[] args) throws IOException, LWJGLException, InterruptedException {
 
         Menu mymenu = new Menu();
-        mymenu.play_in_game();
         mymenu.menu();
         
         //TheView v = new TheView();

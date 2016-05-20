@@ -10,7 +10,7 @@ public class Entity {
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
 	private float scale;
-        private Boolean outOfRange=false; 
+        public Boolean outOfRange=false; 
 
 	public Entity(ModelAndTexuredInfo model, Vector3f position, float rotX, float rotY, float rotZ,
 			float scale) {
@@ -25,8 +25,9 @@ public class Entity {
 	public void increasePosition(float dx, float dy, float dz) {
 		 
          
-            if(this.position.getX()>=32f || this.position.getX()<=-32f ){
+            if(this.position.getX()>=28f || this.position.getX()<=-28f ){
                 outOfRange=true;
+                
                 /*
                 this.position.x += dx;
                 if(this.position.getX()==33f)
@@ -40,11 +41,16 @@ public class Entity {
                     this.position.x += dx;
             }
             else{
-                this.position.x += dx;
-                if(this.position.getX()==33f)
-                    this.position.x--;
-                if(this.position.getX()==-33f)
-                    this.position.x++;
+                //this.position.x += dx;
+//                if(this.position.getX()==33f) 
+//                {
+//                    this.position.x--;
+//                }
+//                    
+//                if(this.position.getX()==-33f)
+//                {
+//                    this.position.x++;
+//                }
             }      
                 this.position.y += dy;
 		this.position.z += dz;
