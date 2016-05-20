@@ -5,6 +5,7 @@
         <group>
             <file>file:/D:/Projects/bouncingball-master/src/controller/Camera.java</file>
             <file>file:/D:/Projects/bouncingball-master/src/controller/Player.java</file>
+            <file>file:/D:/Projects/bouncingball-master/src/controller/Terrain.java</file>
             <file>file:/D:/Projects/bouncingball-master/src/view/TheView.java</file>
             <file>file:/D:/Projects/bouncingball-master/src/view/Menu.java</file>
         </group>
